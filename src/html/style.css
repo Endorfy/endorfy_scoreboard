@@ -1,31 +1,10 @@
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #363636;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgb(31, 31, 31);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #575757;
-}
-
-#linia{
-  opacity:0.5;
-}
-
 #zetka{
-  height: auto;
-  opacity: 0.8;
+    height: auto;
+    opacity: 0.8;
 } 
-
 .zetka2{
-  color:white;
-  background: rgb(0, 0, 0);
-  border-radius: 15px;
-  display: none;
+    color:white;
+    background-color: rgba(15, 15, 15, 0.6);
+    border-radius: 15px;
+    display: none;
 }
