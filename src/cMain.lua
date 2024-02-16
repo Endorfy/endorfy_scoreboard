@@ -9,7 +9,6 @@ local library = {
     scoreboardUses = 3
 }
 
-
 library.mainThread = function(status)
     library.globals.scoreboardStatus = status
     SendNUIMessage({action = 'show', state = library.globals.scoreboardStatus})
