@@ -1,12 +1,12 @@
 fx_version 'cerulean'
 game 'gta5'
-author 'Endory | Fineeasz & S1MBA96'
+author 'Endory Development | github.com/Endorfy'
 
 lua54 'yes'
 
 shared_script 'config.lua'
-client_script 'src/cMain.lua'
-server_script 'src/sMain.lua'
+client_script 'src/cMain.lua' 
+server_script 'src/sMain.lua' 
 
 files {
     'src/html/script.js',
@@ -14,4 +14,8 @@ files {
     'src/html/index.html'
 }
 
-ui_page 'src/html/index.html'
+ui_page 'src/html/index.html' 
+
+-- Backend created by Fineeasz
+-- Frotned created by AuuuMordzia
+-- Producted by github.com/Endorfy
