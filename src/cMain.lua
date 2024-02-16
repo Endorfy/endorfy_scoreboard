@@ -80,8 +80,6 @@ end
 RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(cachee, myInfoo)
     cache = cachee 
     myInfo = myInfoo
-    print(json.encode(cachee))
-    print(json.encode(myInfoo))
 end)
 
 RegisterCommand('+scoreboard', function()
