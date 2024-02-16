@@ -1,8 +1,7 @@
 Config = {}
 
 Config = {
-
-    ServerName = "sadasd Development",
+    ServerName = "Endorfy Development", -- Ur server name
 
     CoreExport = function()
         return exports['es_extended']:getSharedObject() -- ESX
@@ -13,7 +12,7 @@ Config = {
         Time = 5000,
     },
 
-    Notify = function (message)
+    Notify = function (message) -- U can here use ur notify or smth
         print(message)
     end,
 
@@ -21,7 +20,11 @@ Config = {
         waitsometime = "Please wait some time before next use!"
     },
 
-    AdminGroups = {
-        ["user"] = true
+    AdminGroups = { -- Put here ur admin ranks
+        ["owner"] = true,
+        ["superadmin"] = true,
+        ["moderator"] = true,
+        ["support"] = true,
+        ["trialsupport"] = true
     }
 }

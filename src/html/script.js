@@ -31,7 +31,6 @@ window.addEventListener('message', function (event) {
             }
         }
 
-
         updateCounter('police', '#slodkielspdcounbter');
         updateCounter('ambulance', '#slodkieambulancecounter');
         updateCounter('mecano', '#slodkiemechanikicounter');
