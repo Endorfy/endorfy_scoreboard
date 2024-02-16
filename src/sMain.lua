@@ -26,7 +26,7 @@ AddEventHandler('onResourceStart', function(resource)
     if (GetCurrentResourceName() ~= resource) then return end
 
     for k,v in pairs(GetPlayers()) do
-        local xPlayer = ESX.GetPlayerFromId(k)
+        local xPlayer = ESX.GetPlayerFromId(v)
         local playerId = xPlayer.source
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
