@@ -31,7 +31,6 @@ AddEventHandler('onResourceStart', function(resource)
             cache.processedPlayers[playerId] = true
             local jobName = v.job.name
             cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = v.getGroup()}
-            print(json.encode(cache.players))
             cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
             cache.counter['players'] = (cache.counter['players'] or 0) + 1
             CheckAdmin(v.getGroup())

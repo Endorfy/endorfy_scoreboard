@@ -44,13 +44,16 @@ library.drawThread = function ()
                 local playerServerId = GetPlayerServerId(player)
                 local playerPedCoords = GetEntityCoords(playerPed)
     
+                if not Config.ShowMe and (myPed == playerPed) then 
+                    return
+                end
+
                 if #(myPedCoords - playerPedCoords) < 50 then
                     DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, {255, 255, 255})
                 end
             
                 
                 if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
-                    -- print(json.encode(players))
                     DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
                 end                              
     
@@ -109,8 +112,6 @@ RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, my
     cache = cachee 
     myInfo = myInfoo
     players = playerss
-    print(json.encode(players))
-    print("Kurwa dostalem nowe dane")
 end)
 
 RegisterCommand('+scoreboard', function()
