@@ -40,7 +40,7 @@ AddEventHandler('onResourceStart', function(resource)
 end)
 
 AddEventHandler('esx:playerLoaded', function(source, xPlayer)
-    local playerId = source
+    local playerId = xPlayer.source
     if not cache.processedPlayers[playerId] then
         cache.processedPlayers[playerId] = true
         local jobName = xPlayer.job.name
