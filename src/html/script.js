@@ -3,10 +3,8 @@ window.addEventListener('message', function (event) {
         var zetkaElement = document.querySelector('.zetka2');
 
         if (event.data.state) {
-            console.log('block');
             zetkaElement.style.display = 'block';
         } else {
-            console.log('none');
             zetkaElement.style.display = 'none';
         }
     } else if (event.data.action === "update") {
@@ -25,8 +23,8 @@ window.addEventListener('message', function (event) {
         }
 
         function updateCounter(counterType, counterElement) {
-            if (event.data.cache && event.data.cache.counter && event.data.cache.counter[counterType]) {
-                document.getElementById(counterElement).innerHTML = event.data.cache.counter[counterType];
+            if (event.data.cache && event.data.cache && event.data.cache[counterType]) {
+                document.getElementById(counterElement).innerHTML = event.data.cache[counterType];
             } else {
                 document.getElementById(counterElement).innerHTML = 0;
             }

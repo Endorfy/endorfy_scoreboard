@@ -18,5 +18,5 @@ files {
 ui_page 'src/html/index.html' 
 
 -- Backend created by Fineeasz
--- Frotned created by AuuuMordzia
+-- Frontend created by AuuuMordzia
 -- Producted by github.com/Endorfy

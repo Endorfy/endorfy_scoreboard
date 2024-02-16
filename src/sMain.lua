@@ -2,8 +2,25 @@ ESX = Config.CoreExport()
 
 local cache = {
     counter = {},
+    players = {},
     processedPlayers = {}
 }
+
+AddEventHandler('esx:setGroup', function(source, group)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local playerId = xPlayer.source
+    cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
+end)
+
+AddStateBagChangeHandler("group", nil, function(bagName, key, value) 
+    local src = tonumber(string.match(bagName, "%d+"))
+
+    if src then
+        local xPlayer = ESX.GetPlayerFromId(src)
+        local playerId = xPlayer.source
+        cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
+    end
+end)
 
 AddEventHandler('onResourceStart', function(resource)
     if (GetCurrentResourceName() ~= resource) then return end
@@ -13,6 +30,8 @@ AddEventHandler('onResourceStart', function(resource)
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
             local jobName = v.job.name
+            cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = v.getGroup()}
+            print(json.encode(cache.players))
             cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
             cache.counter['players'] = (cache.counter['players'] or 0) + 1
             CheckAdmin(v.getGroup())
@@ -25,6 +44,7 @@ AddEventHandler('esx:playerLoaded', function(source, xPlayer)
     if not cache.processedPlayers[playerId] then
         cache.processedPlayers[playerId] = true
         local jobName = xPlayer.job.name
+        cache.players[playerId] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
         cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
         cache.counter['players'] = (cache.counter['players'] or 0) + 1
         CheckAdmin(xPlayer.getGroup())
@@ -47,5 +67,5 @@ RegisterNetEvent('endorfy_scoreobard:getInfos', function()
         Group = xPlayer.getGroup(),
     }
 
-    TriggerClientEvent('endorfy_scoreobard:reciveInfos', src, cache, myInfo)
+    TriggerClientEvent('endorfy_scoreobard:reciveInfos', src, cache.players, cache.counter, myInfo)
 end)

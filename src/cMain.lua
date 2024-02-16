@@ -2,6 +2,7 @@ ESX = Config.CoreExport()
 
 cache = {}
 myInfo = {}
+players = {}
 local library = {
     globals = {},
     scoreboardLastTime = 6000,
@@ -16,7 +17,6 @@ library.mainThread = function(status)
     
     if library.scoreboardUses >= 3 then
         TriggerServerEvent('endorfy_scoreobard:getInfos')
-        Citizen.Wait(500)
         SendNUIMessage({action = 'update', cache = cache, myInfo = myInfo, ServerName = Config.ServerName})
         library.scoreboardUses = 0
     end
@@ -47,6 +47,12 @@ library.drawThread = function ()
                 if #(myPedCoords - playerPedCoords) < 50 then
                     DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, {255, 255, 255})
                 end
+            
+                
+                if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
+                    -- print(json.encode(players))
+                    DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
+                end                              
     
             end
     
@@ -77,9 +83,34 @@ function DrawText3D(x, y, z, text, color)
     end
 end
 
-RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(cachee, myInfoo)
+function DrawText3D2(x, y, z, text, color)
+    local onScreen, _x, _y = World3dToScreen2d(x,y,z)
+	
+	local scale = (1 / #(GetGameplayCamCoords() - vec3(x, y, z))) * 2
+    local fov = (1 / GetGameplayCamFov()) * 100
+    scale = scale * fov
+    
+    if onScreen then
+        SetTextScale(0.3 * scale, 0.65 * scale)
+        SetTextFont(0)
+        SetTextColour(color[1], color[2], color[3], 255)
+        SetTextDropshadow(0, 0, 5, 0, 255)
+        SetTextDropShadow()
+        SetTextOutline()
+		SetTextCentre(1)
+
+        SetTextEntry("STRING")
+        AddTextComponentString(text)
+        DrawText(_x,_y)
+    end
+end
+
+RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, myInfoo)
     cache = cachee 
     myInfo = myInfoo
+    players = playerss
+    print(json.encode(players))
+    print("Kurwa dostalem nowe dane")
 end)
 
 RegisterCommand('+scoreboard', function()
