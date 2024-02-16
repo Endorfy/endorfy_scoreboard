@@ -6,7 +6,7 @@ players = {}
 local library = {
     globals = {},
     scoreboardLastTime = 6000,
-    scoreboardUses = 3
+    scoreboardUses = 4
 }
 
 library.mainThread = function(status)
