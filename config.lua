@@ -7,9 +7,9 @@ Config = {
 
     ShowGroups = true, -- ShowGroups means that u will see a group of player under his head
     AdminGroups = { -- Put here ur admin ranks
-        ["owner"] = {Enabled = true, Prefix = " O W n EE R", Color = {135, 234, 231}},
-        ["superadmin"] = {Enabled = true, Prefix = "Super Admin", Color = {242, 234, 0}},
-        ["admin"] = {Enabled = true, Prefix = "Administrator", Color = {242, 234, 0}}
+        ["owner"] = {Admin = true, Prefix = " O W n EE R", Color = {135, 234, 231}},
+        ["superadmin"] = {Admin = true, Prefix = "Super Admin", Color = {242, 234, 0}},
+        ["admin"] = {Admin = true, Prefix = "Administrator", Color = {242, 234, 0}}
     },
 
     Delay = { -- U set a delay to use a scoreboard to 5 seconds.

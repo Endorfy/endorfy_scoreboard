@@ -6,8 +6,9 @@ players = {}
 local library = {
     globals = {},
     scoreboardLastTime = 6000,
-    scoreboardUses = 5
+    scoreboardUses = 3
 }
+
 
 library.mainThread = function(status)
     library.globals.scoreboardStatus = status
@@ -49,7 +50,7 @@ library.drawThread = function ()
                 end
 
                 if #(myPedCoords - playerPedCoords) < 50 then
-                    DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, {255, 255, 255})
+                    DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, (NetworkIsPlayerTalking(player) and {153, 255, 102} or {255, 255, 255}))
                 end
             
                 if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
@@ -69,6 +70,11 @@ RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, my
     players = playerss
 end)
 
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function()
+    TriggerServerEvent('endorfy_scoreobard:getInfos')
+end)
+
 RegisterCommand('+scoreboard', function()
     library.mainThread(true)
 end, false)
@@ -79,7 +85,6 @@ RegisterCommand('-scoreboard', function()
 end, false)
 
 RegisterKeyMapping('+scoreboard', 'Lista graczy', 'keyboard', 'Z')
-
 
 -- Some draw functions
 

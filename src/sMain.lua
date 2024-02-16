@@ -3,7 +3,6 @@ ESX = Config.CoreExport()
 local cache = {
     counter = {},
     players = {},
-    lastJob = {},
     processedPlayers = {}
 }
 
@@ -13,26 +12,14 @@ AddEventHandler('esx:setGroup', function(source, group)
     cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
 end)
 
-AddEventHandler('esx:setJob', function(source, group)
-    local xPlayer = ESX.GetPlayerFromId(source)
-    local playerId = xPlayer.source
-    local lastJobName = cache.lastJob[tostring(playerId)] or nil
-    local newJobName = xPlayer.job.name
+RegisterNetEvent('esx:setJob', function(src, job, lastJob)
+    local xPlayer = ESX.GetPlayerFromId(src)
+    local newJobName = job.name
+    local lastJobName = lastJob.name
 
-    if lastJobName ~= newJobName then
-        cache.counter[lastJobName] = (cache.counter[lastJobName] or 1) - 1
+    if job.name ~= lastJob.name then
         cache.counter[newJobName] = (cache.counter[newJobName] or 0) + 1
-        cache.lastJob[tostring(playerId)] = newJobName 
-    end
-end)
-
-AddStateBagChangeHandler("group", nil, function(bagName, key, value) 
-    local src = tonumber(string.match(bagName, "%d+"))
-
-    if src then
-        local xPlayer = ESX.GetPlayerFromId(src)
-        local playerId = xPlayer.source
-        cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
+        cache.counter[lastJobName] = (cache.counter[lastJobName] or 1) - 1
     end
 end)
 
@@ -40,18 +27,28 @@ AddEventHandler('onResourceStart', function(resource)
     if (GetCurrentResourceName() ~= resource) then return end
 
     for k,v in pairs(GetPlayers()) do
+        if not v then return end
         local xPlayer = ESX.GetPlayerFromId(v)
         local playerId = xPlayer.source
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
             local jobName = xPlayer.job.name
-            cache.lastJob[tostring(playerId)] = jobName 
             cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
             cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
             cache.counter['players'] = (cache.counter['players'] or 0) + 1
-            CheckAdmin(xPlayer.getGroup())
+            CheckAdmin(xPlayer.getGroup(), "join")
         end
     end
+end)
+
+AddEventHandler('esx:playerDropped', function(source)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local playerId = xPlayer.source
+    local jobName = xPlayer.job.name
+    cache.counter[jobName] = (cache.counter[jobName] or 1) - 1
+    cache.players[tostring(playerId)] = nil
+    cache.counter['players'] = (cache.counter['players'] or 0) - 1
+    CheckAdmin(xPlayer.getGroup(), "left") 
 end)
 
 AddEventHandler('esx:playerLoaded', function(source, xPlayer)
@@ -59,17 +56,20 @@ AddEventHandler('esx:playerLoaded', function(source, xPlayer)
     if not cache.processedPlayers[playerId] then
         cache.processedPlayers[playerId] = true
         local jobName = xPlayer.job.name
-        cache.lastJob[tostring(playerId)] = jobName
         cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
         cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
         cache.counter['players'] = (cache.counter['players'] or 0) + 1
-        CheckAdmin(xPlayer.getGroup())
+        CheckAdmin(xPlayer.getGroup(), "join")
     end
 end)
 
-CheckAdmin = function(group)
-    if Config.AdminGroups[group] then
-        cache.counter['admins'] = (cache.counter['admins'] or 0) + 1
+CheckAdmin = function(group, status)
+    if Config.AdminGroups[group].Admin then
+        if status == "join" then
+            cache.counter['admins'] = (cache.counter['admins'] or 0) + 1
+        elseif status == "left" then 
+            cache.counter['admins'] = (cache.counter['admins'] or 0) - 1
+        end
     end
 end
 
@@ -91,3 +91,10 @@ RegisterNetEvent('endorfy_scoreobard:getInfos', function()
 
     TriggerClientEvent('endorfy_scoreobard:reciveInfos', src, cache.players, cache.counter, myInfo)
 end)
+
+-- RegisterCommand("debug", function(source)
+--     if source == 0 then
+--         print(json.encode(cache.counter))
+--         print(json.encode(cache.players))
+--     end
+-- end)
