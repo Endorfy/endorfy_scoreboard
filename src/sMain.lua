@@ -31,7 +31,7 @@ AddEventHandler('onResourceStart', function(resource)
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
             local jobName = xPlayer.job.name
-            cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = v.getGroup()}
+            cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
             cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
             cache.counter['players'] = (cache.counter['players'] or 0) + 1
             CheckAdmin(xPlayer.getGroup())
