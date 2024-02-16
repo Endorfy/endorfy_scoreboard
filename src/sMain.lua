@@ -3,6 +3,7 @@ ESX = Config.CoreExport()
 local cache = {
     counter = {},
     players = {},
+    lastJob = {},
     processedPlayers = {}
 }
 
@@ -10,6 +11,19 @@ AddEventHandler('esx:setGroup', function(source, group)
     local xPlayer = ESX.GetPlayerFromId(source)
     local playerId = xPlayer.source
     cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
+end)
+
+AddEventHandler('esx:setJob', function(source, group)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local playerId = xPlayer.source
+    local lastJobName = cache.lastJob[tostring(playerId)] or nil
+    local newJobName = xPlayer.job.name
+
+    if lastJobName ~= newJobName then
+        cache.counter[lastJobName] = (cache.counter[lastJobName] or 1) - 1
+        cache.counter[newJobName] = (cache.counter[newJobName] or 0) + 1
+        cache.lastJob[tostring(playerId)] = newJobName 
+    end
 end)
 
 AddStateBagChangeHandler("group", nil, function(bagName, key, value) 
@@ -31,6 +45,7 @@ AddEventHandler('onResourceStart', function(resource)
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
             local jobName = xPlayer.job.name
+            cache.lastJob[tostring(playerId)] = jobName 
             cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
             cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
             cache.counter['players'] = (cache.counter['players'] or 0) + 1
@@ -44,6 +59,7 @@ AddEventHandler('esx:playerLoaded', function(source, xPlayer)
     if not cache.processedPlayers[playerId] then
         cache.processedPlayers[playerId] = true
         local jobName = xPlayer.job.name
+        cache.lastJob[tostring(playerId)] = jobName
         cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = xPlayer.getGroup()}
         cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
         cache.counter['players'] = (cache.counter['players'] or 0) + 1
