@@ -6,3 +6,4 @@
 **Frontend created by <a href="https://github.com/AuuuMordzia"> AuuuMordzia</a>**
 <br>
 **Full support - <a href="https://discord.gg/JjhTUenY">DISCORD</a>**
+<h1>COME TO OUR <a href="https://discord.gg/JjhTUenY">DISCORD</a> TO GET MORE SCRIPTS SOON</h1>
