@@ -4,5 +4,4 @@
 **Backend created by <a href="https://github.com/fineeasz"> Fineeasz</a>**
 <br>
 **Frontend created by <a href="https://github.com/AuuuMordzia"> AuuuMordzia</a>**
-
 **Full support - <a href="https://discord.gg/JjhTUenY">DISCORD</a>**
