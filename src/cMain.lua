@@ -1,7 +1,7 @@
 ESX = Config.CoreExport()
 
-local cache = {}
-local myInfo = {}
+cache = {}
+myInfo = {}
 local library = {
     globals = {},
     scoreboardLastTime = 6000,
@@ -10,11 +10,14 @@ local library = {
 
 library.mainThread = function(status)
     library.globals.scoreboardStatus = status
+    SendNUIMessage({action = 'show', state = library.globals.scoreboardStatus})
     if library.globals.inUse then return end
     library.globals.inUse = true
     
     if library.scoreboardUses >= 3 then
         TriggerServerEvent('endorfy_scoreobard:getInfos')
+        Citizen.Wait(500)
+        SendNUIMessage({action = 'update', cache = cache, myInfo = myInfo, ServerName = Config.ServerName})
         library.scoreboardUses = 0
     end
 
@@ -74,8 +77,13 @@ function DrawText3D(x, y, z, text, color)
     end
 end
 
-RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(cache, myInfo)
-    cache = cache myInfo = myInfo
+RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(cachee, myInfoo)
+    cache = cachee 
+    myInfo = myInfoo
+    print("============")
+    print(json.encode(cache))
+    print(json.encode(myInfo))
+    print("============")
 end)
 
 RegisterCommand('+scoreboard', function()

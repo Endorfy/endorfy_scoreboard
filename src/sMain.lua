@@ -10,6 +10,8 @@ AddEventHandler('onResourceStart', function(resource)
     for k,v in pairs(ESX.GetExtendedPlayers()) do
         local jobName = v.job.name
         cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
+        cache.counter['players'] = (cache.counter['players'] or 0) + 1
+        CheckAdmin(v.getGroup())
     end
 
 end)
@@ -19,7 +21,16 @@ AddEventHandler('esx:playerLoaded', function(source, xPlayer)
     local xPlayer = ESX.GetPlayerFromId(src)
     local jobName = xPlayer.job.name
     cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
+    cache.counter['players'] = (cache.counter['players'] or 0) + 1
+    CheckAdmin(xPlayer.getGroup())
 end)
+
+
+CheckAdmin = function(group)
+    if Config.AdminGroups[group] then
+        cache.counter['admins'] = (cache.counter['admins'] or 0) + 1
+    end
+end
 
 RegisterNetEvent('endorfy_scoreobard:getInfos', function()
     local src = source

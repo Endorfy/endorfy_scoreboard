@@ -2,6 +2,8 @@ Config = {}
 
 Config = {
 
+    ServerName = "sadasd Development",
+
     CoreExport = function()
         return exports['es_extended']:getSharedObject() -- ESX
     end,
@@ -17,5 +19,9 @@ Config = {
 
     Locales = {
         waitsometime = "Please wait some time before next use!"
+    },
+
+    AdminGroups = {
+        ["user"] = true
     }
 }

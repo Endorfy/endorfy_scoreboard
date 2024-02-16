@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pl-PL" class="scroll-smooth">
+    <head>
+    <title>Zetka</title>
+    <link rel="website icon" href=".jfif">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.3.0/tinycolor.min.js'></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.0/velocity.min.js"></script>
+		<script src="https://kit.fontawesome.com/ff5833efc6.js" crossorigin="anonymous"></script>
+		<script src="script.js"></script>
+
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/v4-shims.css">		
+        <link rel="stylesheet" href="output.css">
+        <style>
+          ::-webkit-scrollbar {
+              width: 10px;
+          }
+  
+          ::-webkit-scrollbar-track {
+              background: #363636;
+          }
+  
+          ::-webkit-scrollbar-thumb {
+              background: rgb(31, 31, 31);
+          }
+  
+          ::-webkit-scrollbar-thumb:hover {
+              background: #575757;
+          }
+          #linia{
+            opacity:0.5;
+          }
+          #zetka{
+            height: auto;
+            opacity: 0.8;
+          } 
+          .zetka2{
+            color:white;
+            background: rgb(0, 0, 0);
+            border-radius: 15px;
+            display: none;
+          }
+      </style>
+    </head>
+<body class=" animated fadeIn delay-25s flex justify-end items-end px-32 flex-wrap mt-40"> 
+    <div id="wrap" class="zetka2">
+        <div id="zetka" class="w-96 border-2 border-slate-500 rounded-xl">
+            <div class="">
+                <div class="text-white">
+                <div class="flex justify-center items-center flex-wrap">
+                    <img src="logo.png" class="w-20 rounded-full mt-6">
+                </div>
+                <h1 class="font-bold text-center text-xl"><span id="mojpieknyservername">Endorfy Development</span></h1>
+                <div id="linia" class="h-1 w-full bg-slate-700 mt-8"></div>
+                <div class="flex flex-col justify-center items-center">
+                    <h1 class="bg-green-500 font-bold text-center w-72 mt-5 rounded-xl">Postać:</h1>
+                    <div class="flex justify-center items-center gap-2 px-4 mt-4">
+                        <h1 class="font-bold text-xl">Imie:</h1><p class="font-medium text-lg text-center"><span id="mojezajebaneimie">BRAK</span></p>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-2 px-4">
+                        <h1 class="font-bold text-xl">Praca:</h1><p class="font-medium text-lg text-center"><span id="mojzajebanyjob">BRAK</span></p>
+                    </div>
+
+                </div>
+                <div id="linia" class="h-1 w-full bg-slate-700 mt-8"></div>
+                <div class="flex flex-col justify-center items-center flex-wrap px-10">
+                    <h1 class="bg-green-500 font-bold text-center w-72 mt-5 rounded-xl">Informacje:</h1>
+                    <div class="flex justify-center items-center flex-wrap gap-4 mt-5">
+                        <div class="flex gap-1 items-center justify-center">
+                            <i class="fas fa-user-police"></i><h1 class="font-medium">Lspd</h1><p><span id="slodkielspdcounbter">0</span></p>
+                        </div>
+                        <div class="flex gap-1 items-center justify-center">
+                            <i class="fas fa-user-doctor"></i><h1 class="font-medium">Ems</h1><p><span id="slodkieambulancecounter">0</span></p>
+                        </div>
+                        <div class="flex gap-1 items-center justify-center">
+                            <i class="fas fa-car-burst"></i><h1 class="font-medium">Lscm</h1><p><span id="slodkiemechanikicounter">0</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="linia" class="h-1 w-full bg-slate-700 mt-6"></div>
+                <div class="flex gap-2 justify-center items-center py-2 mt-1">
+                    <i class="fas fa-user-group"></i><h1 class="text-center font-bold">Ilośc graczy:</h1><p class="font-bold"><span id="slodkiegraczecounter">0</span> Admins: <span id="slodkieadminycounter">0</span></p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+</html>
