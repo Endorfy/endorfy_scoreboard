@@ -25,15 +25,16 @@ end)
 AddEventHandler('onResourceStart', function(resource)
     if (GetCurrentResourceName() ~= resource) then return end
 
-    for k,v in pairs(ESX.GetExtendedPlayers()) do
-        local playerId = v.source
+    for k,v in pairs(GetPlayers()) do
+        local xPlayer = ESX.GetPlayerFromId(k)
+        local playerId = xPlayer.source
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
-            local jobName = v.job.name
+            local jobName = xPlayer.job.name
             cache.players[tostring(playerId)] = {playerId = playerId, playerGroup = v.getGroup()}
             cache.counter[jobName] = (cache.counter[jobName] or 0) + 1
             cache.counter['players'] = (cache.counter['players'] or 0) + 1
-            CheckAdmin(v.getGroup())
+            CheckAdmin(xPlayer.getGroup())
         end
     end
 end)
