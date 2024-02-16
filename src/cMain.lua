@@ -52,7 +52,6 @@ library.drawThread = function ()
                     DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, {255, 255, 255})
                 end
             
-                
                 if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
                     DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
                 end                              
@@ -63,6 +62,26 @@ library.drawThread = function ()
         end
     end)
 end
+
+RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, myInfoo)
+    cache = cachee 
+    myInfo = myInfoo
+    players = playerss
+end)
+
+RegisterCommand('+scoreboard', function()
+    library.mainThread(true)
+end, false)
+
+RegisterCommand('-scoreboard', function()
+    library.mainThread(false)
+    library.globals.inUse = false
+end, false)
+
+RegisterKeyMapping('+scoreboard', 'Lista graczy', 'keyboard', 'Z')
+
+
+-- Some draw functions
 
 function DrawText3D(x, y, z, text, color)
     local onScreen, _x, _y = World3dToScreen2d(x,y,z)
@@ -107,20 +126,3 @@ function DrawText3D2(x, y, z, text, color)
         DrawText(_x,_y)
     end
 end
-
-RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, myInfoo)
-    cache = cachee 
-    myInfo = myInfoo
-    players = playerss
-end)
-
-RegisterCommand('+scoreboard', function()
-    library.mainThread(true)
-end, false)
-
-RegisterCommand('-scoreboard', function()
-    library.mainThread(false)
-    library.globals.inUse = false
-end, false)
-
-RegisterKeyMapping('+scoreboard', 'Lista graczy', 'keyboard', 'Z')
