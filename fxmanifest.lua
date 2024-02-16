@@ -9,6 +9,7 @@ client_script 'src/cMain.lua'
 server_script 'src/sMain.lua' 
 
 files {
+    'src/html/style.css',
     'src/html/script.js',
     'src/html/logo.png',
     'src/html/index.html'
