@@ -67,11 +67,11 @@ RegisterNetEvent('endorfy_scoreobard:getInfos', function()
         Group = xPlayer.getGroup(),
     }
 
-    if cache.players[tostring(xPlayer.source)].playerGroup ~= myInfo.Group then
+    local cachedPlayer = cache.players[tostring(xPlayer.source)]
+
+    if not cachedPlayer or cachedPlayer.playerGroup ~= myInfo.Group then
         cache.players[tostring(xPlayer.source)] = {playerId = xPlayer.source, playerGroup = xPlayer.getGroup()}
     end
-
-
 
     TriggerClientEvent('endorfy_scoreobard:reciveInfos', src, cache.players, cache.counter, myInfo)
 end)
