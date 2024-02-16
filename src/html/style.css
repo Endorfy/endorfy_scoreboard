@@ -8,3 +8,8 @@
     border-radius: 15px;
     display: none;
 }
+.kreska{
+    width: 80%;
+    height: 1px;
+    background: white;
+}
