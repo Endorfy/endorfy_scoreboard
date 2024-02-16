@@ -10,7 +10,6 @@ window.addEventListener('message', function (event) {
     } else if (event.data.action === "update") {
 
         if (event.data.myInfo && event.data.myInfo.Name) {
-            console.log(event.data.myInfo.Name)
             document.getElementById('mojezajebaneimie').innerHTML = event.data.myInfo.Name;
         }
 
