@@ -4,10 +4,12 @@ Config = {
 
     ServerName = "Endorfy Development", -- Ur server name
     ShowMe = true, -- U will see ur id when pressed button of scoreboard
+    ShowInvisibleIds = false, -- U will see ids of peoples who are invisible
+    ShowIsUsingScoreboard = true, -- Will show on player ! if using scoreboard
 
     ShowGroups = true, -- ShowGroups means that u will see a group of player under his head
     AdminGroups = { -- Put here ur admin ranks
-        ["owner"] = {Admin = true, Prefix = " O W n EE R", Color = {135, 234, 231}},
+        ["owner"] = {Admin = true, Prefix = "Owner", Color = {135, 234, 231}},
         ["superadmin"] = {Admin = true, Prefix = "Super Admin", Color = {242, 234, 0}},
         ["admin"] = {Admin = true, Prefix = "Administrator", Color = {242, 234, 0}}
     },

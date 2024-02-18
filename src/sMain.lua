@@ -29,6 +29,7 @@ AddEventHandler('onResourceStart', function(resource)
     for k,v in pairs(GetPlayers()) do
         if not v then return end
         local xPlayer = ESX.GetPlayerFromId(v)
+        if not xPlayer then return end
         local playerId = xPlayer.source
         if not cache.processedPlayers[playerId] then
             cache.processedPlayers[playerId] = true
@@ -79,7 +80,7 @@ RegisterNetEvent('endorfy_scoreobard:getInfos', function()
     
     local myInfo = {
         Name = xPlayer.getName(),
-        Job = xPlayer.job.name,
+        Job = xPlayer.job.label,
         Group = xPlayer.getGroup(),
     }
 
