@@ -59,10 +59,6 @@ library.drawThread = function ()
                 if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
                     DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
                 end
-
-                if Config.ShowIsUsingScoreboard and Player(playerServerId).state.isUsingScoreboard then
-                    DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 0.5, "~r~!", ({255, 255, 255}))
-                end
     
             end
     
@@ -84,13 +80,11 @@ end)
 
 RegisterCommand('+scoreboard', function()
     library.mainThread(true)
-    LocalPlayer.state:set("isUsingScoreboard", true, true)
 end, false)
 
 RegisterCommand('-scoreboard', function()
     library.mainThread(false)
     library.globals.inUse = false
-    LocalPlayer.state:set("isUsingScoreboard", false, false)
 end, false)
 
 RegisterKeyMapping('+scoreboard', 'Lista graczy', 'keyboard', 'Z')
