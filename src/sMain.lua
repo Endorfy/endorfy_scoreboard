@@ -66,7 +66,7 @@ AddEventHandler('esx:playerLoaded', function(source, xPlayer)
 end)
 
 CheckAdmin = function(group, status)
-    if Config.AdminGroups[group].Admin then
+    if Config.AdminGroups[group] and Config.AdminGroups[group].Admin then
         if status == "join" then
             cache.counter['admins'] = (cache.counter['admins'] or 0) + 1
         elseif status == "left" then 

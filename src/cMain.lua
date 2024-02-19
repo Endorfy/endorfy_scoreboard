@@ -46,33 +46,48 @@ library.drawThread = function ()
                 local playerPed = GetPlayerPed(player)
                 local playerServerId = GetPlayerServerId(player)
                 local playerPedCoords = GetEntityCoords(playerPed)
-    
-                if not Config.ShowMe and (myPed == playerPed) then 
-                    return
-                end
 
-                if not Config.ShowInvisibleIds and not IsEntityVisible(playerPed) then
-                    return
+                if (Config.ShowMe or myPed ~= playerPed) and (Config.ShowInvisibleIds or IsEntityVisible(playerPed)) then
+                    if #(myPedCoords - playerPedCoords) < 50 then
+                        DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, (NetworkIsPlayerTalking(player) and {153, 255, 102} or {255, 255, 255}))
+                    end
+                
+                    if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
+                        DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
+                    end
                 end
-
-                if #(myPedCoords - playerPedCoords) < 50 then
-                    DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.15, playerServerId, (NetworkIsPlayerTalking(player) and {153, 255, 102} or {255, 255, 255}))
-                end
-            
-                if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
-                    DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
-                end
-
-                if using[tostring(playerServerId)] and Config.ShowIsUsingScoreboard then
-                    DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 0.5, "~r~!", {255, 255, 255})
-                end
-    
             end
     
             Citizen.Wait(1)
         end
     end)
 end
+
+Citizen.CreateThread(function()
+    while true do
+        local sleep = 500
+        local myPed = PlayerPedId()
+        local myPedCoords = GetEntityCoords(myPed)
+
+        for k, v in pairs(using) do 
+            if v then
+                local player = GetPlayerFromServerId(tonumber(k))
+                local playerPed = GetPlayerPed(player)
+                if playerPed ~= myPed then
+                    local playerPedCoords = GetEntityCoords(playerPed)
+                    if (Config.ShowInvisibleIds or IsEntityVisible(playerPed)) and #(myPedCoords - playerPedCoords) < 50 then
+                        if using[tostring(k)] and Config.ShowIsUsingScoreboard then
+                            DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 0.5, "~r~!", {255, 255, 255})
+                            sleep = 0
+                        end
+                    end
+                end
+            end
+        end
+
+        Citizen.Wait(sleep)
+    end
+end)
 
 RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, myInfoo)
     cache = cachee 
