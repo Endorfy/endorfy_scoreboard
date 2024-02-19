@@ -63,31 +63,33 @@ library.drawThread = function ()
     end)
 end
 
-Citizen.CreateThread(function()
-    while true do
-        local sleep = 500
-        local myPed = PlayerPedId()
-        local myPedCoords = GetEntityCoords(myPed)
+if Config.ShowIsUsingScoreboard then
+    Citizen.CreateThread(function()
+        while true do
+            local sleep = 500
+            local myPed = PlayerPedId()
+            local myPedCoords = GetEntityCoords(myPed)
 
-        for k, v in pairs(using) do 
-            if v then
-                local player = GetPlayerFromServerId(tonumber(k))
-                local playerPed = GetPlayerPed(player)
-                if playerPed ~= myPed then
-                    local playerPedCoords = GetEntityCoords(playerPed)
-                    if (Config.ShowInvisibleIds or IsEntityVisible(playerPed)) and #(myPedCoords - playerPedCoords) < 50 then
-                        if using[tostring(k)] and Config.ShowIsUsingScoreboard then
-                            DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 0.5, "~r~!", {255, 255, 255})
-                            sleep = 0
+            for k, v in pairs(using) do 
+                if v then
+                    local player = GetPlayerFromServerId(tonumber(k))
+                    local playerPed = GetPlayerPed(player)
+                    if playerPed ~= myPed then
+                        local playerPedCoords = GetEntityCoords(playerPed)
+                        if (Config.ShowInvisibleIds or IsEntityVisible(playerPed)) and #(myPedCoords - playerPedCoords) < 50 then
+                            if using[tostring(k)] then
+                                DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 0.5, "~r~!", {255, 255, 255})
+                                sleep = 0
+                            end
                         end
                     end
                 end
             end
-        end
 
-        Citizen.Wait(sleep)
-    end
-end)
+            Citizen.Wait(sleep)
+        end
+    end)
+end
 
 RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, myInfoo)
     cache = cachee 
