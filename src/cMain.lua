@@ -3,6 +3,7 @@ ESX = Config.CoreExport()
 cache = {}
 myInfo = {}
 players = {}
+using = {}
 local library = {
     globals = {},
     scoreboardLastTime = 6000,
@@ -11,10 +12,12 @@ local library = {
 
 library.mainThread = function(status)
     library.globals.scoreboardStatus = status
+    if Config.ShowIsUsingScoreboard then TriggerServerEvent("endorfy_scoreboard:setToggle", library.globals.scoreboardStatus) end
     SendNUIMessage({action = 'show', state = library.globals.scoreboardStatus})
     if library.globals.inUse then return end
     library.globals.inUse = true
-    
+
+
     if library.scoreboardUses >= 3 then
         TriggerServerEvent('endorfy_scoreobard:getInfos')
         SendNUIMessage({action = 'update', cache = cache, myInfo = myInfo, ServerName = Config.ServerName})
@@ -59,6 +62,10 @@ library.drawThread = function ()
                 if players[tostring(playerServerId)] and Config.AdminGroups[players[tostring(playerServerId)].playerGroup] and Config.ShowGroups then
                     DrawText3D2(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 1.30, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Prefix, Config.AdminGroups[players[tostring(playerServerId)].playerGroup].Color)
                 end
+
+                if using[tostring(playerServerId)] and Config.ShowIsUsingScoreboard then
+                    DrawText3D(playerPedCoords.x, playerPedCoords.y, playerPedCoords.z + 0.5, "~r~!", {255, 255, 255})
+                end
     
             end
     
@@ -72,6 +79,12 @@ RegisterNetEvent('endorfy_scoreobard:reciveInfos', function(playerss, cachee, my
     myInfo = myInfoo
     players = playerss
 end)
+
+if Config.ShowIsUsingScoreboard then
+    AddStateBagChangeHandler('using', 'global', function(name, key, value)
+        using = value
+    end)
+end
 
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function()

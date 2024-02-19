@@ -3,7 +3,8 @@ ESX = Config.CoreExport()
 local cache = {
     counter = {},
     players = {},
-    processedPlayers = {}
+    processedPlayers = {},
+    using = {}
 }
 
 AddEventHandler('esx:setGroup', function(source, group)
@@ -91,6 +92,11 @@ RegisterNetEvent('endorfy_scoreobard:getInfos', function()
     end
 
     TriggerClientEvent('endorfy_scoreobard:reciveInfos', src, cache.players, cache.counter, myInfo)
+end)
+
+RegisterNetEvent('endorfy_scoreboard:setToggle', function(status)
+    cache.using[tostring(source)] = status
+    GlobalState.using = cache.using
 end)
 
 -- RegisterCommand("debug", function(source)
